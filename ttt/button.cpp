@@ -16,11 +16,11 @@ Button::Button(const char *imagePath, Vector2 imagePosition, float scale) {
 
 }
 
-Button::~Button() {
+Button::~Button() {     //deconstructor
     UnloadTexture(texture);
 }
 
-void Button::Draw() {
+void Button::Draw() {   //draws the button with said texture
     DrawTextureV(texture, position, WHITE);
 }
 

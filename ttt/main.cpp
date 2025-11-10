@@ -7,17 +7,14 @@
 
 using namespace std;
 
-
 class Board {
     private:
         int row;
         int column;
         char mark;
-        vector <vector<char>> board;
+        vector <vector<char>> board;                            
 
         public:
-
-
 
 
             Board() {
@@ -25,7 +22,24 @@ class Board {
             }
 
             void printBoard(void) {
-                //does this really need to be adde...?
+                DrawRectangle(250, 50, 10, 500, BLACK);
+                DrawRectangle(450, 50, 10, 500, BLACK);
+                DrawRectangle(100, 200, 500, 10, BLACK);
+                DrawRectangle(100, 400, 500, 10, BLACK);
+                
+                DrawRectangle(250,200, 200,200 ,(Color){100, 0, 0, 120});
+                DrawRectangle(50,200, 200,200 ,(Color){100, 0, 0, 120});
+                DrawRectangle(450,200, 200,200 ,(Color){100, 0, 0, 120});
+
+                DrawRectangle(250,50, 200,200 ,(Color){0, 0, 100, 120});
+                DrawRectangle(50,50, 200,200 ,(Color){0, 0, 100, 120});
+                DrawRectangle(450,50, 200,200 ,(Color){0, 0, 100, 120});
+                
+
+                DrawRectangle(250,350, 200,200 ,(Color){0, 100, 0, 120});
+                DrawRectangle(50,350, 200,200 ,(Color){0, 100, 0, 120});
+                DrawRectangle(450,350, 200,200 ,(Color){0, 100, 0, 120});
+                
             }
 
             int placeMark() {
@@ -52,16 +66,17 @@ int main () {
 
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 800;
+    const int screenWidth = 700;
+    const int screenHeight = 600;
 
     SetTargetFPS(60);
 
     InitWindow(screenWidth, screenHeight, "Raylib Buttons!");
 
-    Texture2D background = LoadTexture("graphics/background.avif");
-    Button startButton{"graphics/startutton.png", {300 ,150}, .65};
-    Button endButton{"graphics/endButton.png",  {300 ,150}, .65};
+    Texture2D background = LoadTexture("ttt/graphics/background.jpg");
+    Button startButton{"ttt/graphics/startButton.png", {300 ,75}, .50};
+    Button endButton{"ttt/graphics/exitButton.png",  {300 , 300}, .65};
+    Board board; 
 
     bool exit = false;
 
@@ -69,8 +84,11 @@ int main () {
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
+    if(background.id == 0) {
+        cout << "failed to load background" << endl;
+    }
     // Main game loop
-    while (!WindowShouldClose() == false && exit == false)    // Detect window close button or ESC key
+    while (!WindowShouldClose() && !exit)    // Detect window close button or ESC key
     {
 
         Vector2 mousePosition = GetMousePosition(); 
@@ -80,7 +98,7 @@ int main () {
             cout << "Start button pressed" << endl; 
         }
         if(endButton.isPressed(mousePosition, mousePressed)) {
-            exit == true;
+            exit = true;
         }
 
 
@@ -88,13 +106,13 @@ int main () {
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(BLACK);
+        //ClearBackground(BLACK);
+        //DrawTexture(background , 0 , 0, WHITE);
+        ClearBackground(WHITE);
+        //startButton.Draw();
 
-
-            DrawTexture(background , 0 , 0, WHITE);
-            DrawCircle(50,50,50,RED);
-            startButton.Draw();
-            endButton.Draw();
+        board.printBoard(); 
+        //endButton.Draw();
 
         EndDrawing();
         //----------------------------------------------------------------------------------
