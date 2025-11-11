@@ -2,7 +2,10 @@
 #include <raylib.h>
 #include <vector>
 #include <string>
+
+#include "square.hpp"
 #include "button.hpp"
+
 //TODO * CRL + SHIFT + T to get file to COMPILE!!!
 
 using namespace std;
@@ -42,21 +45,23 @@ class Board {
                 
             }
 
-            int placeMark() {
-                //let the cursor place on the mark 
-            }
+            
 
-            bool checkWin(){
-                //same logic as before in terms of the vector
-            }
-            bool checkDraw() {
-                //same logic as before in terms of the c++ file 
-            }
+            // int placeMark() {
+            //     //let the cursor place on the mark 
+            // }
 
-            void gameStart() {
-                //same logic as before, but switches between 'x' and 'o' after every turn
+            // bool checkWin(){
+            //     //same logic as before in terms of the vector
+            // }
+            // bool checkDraw() {
+            //     //same logic as before in terms of the c++ file 
+            // }
 
-            }
+            // void gameStart() {
+            //     //same logic as before, but switches between 'x' and 'o' after every turn
+
+            // }
 
 };
 
@@ -76,6 +81,8 @@ int main () {
     Texture2D background = LoadTexture("ttt/graphics/background.jpg");
     Button startButton{"ttt/graphics/startButton.png", {300 ,75}, .50};
     Button endButton{"ttt/graphics/exitButton.png",  {300 , 300}, .65};
+    Tile Square1 ({200, 200}, 100);
+
     Board board; 
 
     bool exit = false;
@@ -84,9 +91,6 @@ int main () {
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
-    if(background.id == 0) {
-        cout << "failed to load background" << endl;
-    }
     // Main game loop
     while (!WindowShouldClose() && !exit)    // Detect window close button or ESC key
     {
@@ -97,8 +101,12 @@ int main () {
         if(startButton.isPressed(mousePosition, mousePressed)) {
             cout << "Start button pressed" << endl; 
         }
+
         if(endButton.isPressed(mousePosition, mousePressed)) {
             exit = true;
+        }
+        if(Square1.isHovered(mousePosition)) { //checks if it hovers over the square 
+            cout << "Square pressed" << endl;
         }
 
 
@@ -106,12 +114,11 @@ int main () {
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        //ClearBackground(BLACK);
         //DrawTexture(background , 0 , 0, WHITE);
         ClearBackground(WHITE);
         //startButton.Draw();
-
-        board.printBoard(); 
+        Square1.drawSquare();
+        //board.printBoard(); 
         //endButton.Draw();
 
         EndDrawing();
