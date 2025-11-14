@@ -16,7 +16,6 @@ class Board {
         int column;
         char mark;
         vector <vector<char>> board;                            
-
         public:
 
 
@@ -25,43 +24,15 @@ class Board {
             }
 
             void printBoard(void) {
-                DrawRectangle(250, 50, 10, 500, BLACK);
-                DrawRectangle(450, 50, 10, 500, BLACK);
-                DrawRectangle(100, 200, 500, 10, BLACK);
-                DrawRectangle(100, 400, 500, 10, BLACK);
-                
-                DrawRectangle(250,200, 200,200 ,(Color){100, 0, 0, 120});
-                DrawRectangle(50,200, 200,200 ,(Color){100, 0, 0, 120});
-                DrawRectangle(450,200, 200,200 ,(Color){100, 0, 0, 120});
 
-                DrawRectangle(250,50, 200,200 ,(Color){0, 0, 100, 120});
-                DrawRectangle(50,50, 200,200 ,(Color){0, 0, 100, 120});
-                DrawRectangle(450,50, 200,200 ,(Color){0, 0, 100, 120});
-                
+                DrawRectangle(267, 50, 10, 500, BLACK);
+                DrawRectangle(434, 50, 10, 500, BLACK);
 
-                DrawRectangle(250,350, 200,200 ,(Color){0, 100, 0, 120});
-                DrawRectangle(50,350, 200,200 ,(Color){0, 100, 0, 120});
-                DrawRectangle(450,350, 200,200 ,(Color){0, 100, 0, 120});
+                DrawRectangle(100, 217, 510, 10, BLACK);
+                DrawRectangle(100, 380, 510, 10, BLACK);
                 
             }
-
             
-
-            // int placeMark() {
-            //     //let the cursor place on the mark 
-            // }
-
-            // bool checkWin(){
-            //     //same logic as before in terms of the vector
-            // }
-            // bool checkDraw() {
-            //     //same logic as before in terms of the c++ file 
-            // }
-
-            // void gameStart() {
-            //     //same logic as before, but switches between 'x' and 'o' after every turn
-
-            // }
 
 };
 
@@ -78,10 +49,30 @@ int main () {
 
     InitWindow(screenWidth, screenHeight, "Raylib Buttons!");
 
-    Texture2D background = LoadTexture("ttt/graphics/background.jpg");
-    Button startButton{"ttt/graphics/startButton.png", {300 ,75}, .50};
-    Button endButton{"ttt/graphics/exitButton.png",  {300 , 300}, .65};
-    Tile Square1 ({200, 200}, 100);
+    Texture2D background = LoadTexture("assets/background.jpg");
+    Button startButton{"assets/startButton.png", {300 ,75}, .50};
+    Button endButton{"assets/exitButton.png",  {300 , 300}, .65};
+
+
+    vector<Tile> squares = { 
+        
+    Tile ({100, 50}, 170 , WHITE),
+    Tile ({270, 50}, 170 , WHITE),
+    Tile ({440, 50}, 170 , WHITE),
+
+    Tile ({120, 230}, 155 , WHITE),
+    Tile ({280, 230}, 155 , WHITE),
+    Tile ({440, 230}, 155 , WHITE),
+
+    Tile ({120, 390}, 150 , WHITE),
+    Tile ({280, 390}, 150 , WHITE),
+    Tile ({440, 390}, 150 , WHITE)
+
+    };
+
+
+
+
 
     Board board; 
 
@@ -101,14 +92,10 @@ int main () {
         if(startButton.isPressed(mousePosition, mousePressed)) {
             cout << "Start button pressed" << endl; 
         }
-
         if(endButton.isPressed(mousePosition, mousePressed)) {
             exit = true;
         }
-        if(Square1.isHovered(mousePosition)) { //checks if it hovers over the square 
-            cout << "Square pressed" << endl;
-        }
-
+        
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -117,8 +104,32 @@ int main () {
         //DrawTexture(background , 0 , 0, WHITE);
         ClearBackground(WHITE);
         //startButton.Draw();
-        Square1.drawSquare();
-        //board.printBoard(); 
+
+        for(auto& s: squares){
+            s.drawSquare();
+        }
+
+        for(int i = 0; i < squares.size(); i++) {
+
+            // Vector2 center = {
+            //     (squares[i].bounds.x + squares[i].bounds.width) / 2,
+            //     (squares[i].bounds.y + squares[i].bounds.height) / 2
+            // };
+
+            if(squares[i].isHovered(mousePosition)) {
+                squares[i].color = GRAY;
+            }
+            else {
+                squares[i].color = WHITE;
+            }
+
+            if(squares[i].isHovered(mousePosition) && squares[i].isClicked(mousePosition, mousePressed)){
+                cout << "Square " << (i + 1) << " clicked." << endl;
+                // DrawCircleLinesV({center.x, center.y} , 75, BLACK);
+            }
+        }
+
+        board.printBoard(); 
         //endButton.Draw();
 
         EndDrawing();
