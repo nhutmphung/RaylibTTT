@@ -8,9 +8,6 @@
 
 //TODO * CRL + SHIFT + T to get file to COMPILE!!!
 
-//TODO * 11/13 10:09pm
-//TODO * FIX square.cpp for some reason, look up how to fix rdefinition and mixing declartions and function definitions!!
-
 using namespace std;
 
 class Board {
@@ -55,6 +52,11 @@ int main () {
     Button startButton{"assets/startButton.png", {300 ,75}, .50};
     Button endButton{"assets/exitButton.png",  {300 , 300}, .65};
 
+
+    //TODO * 11/18/25 9:27pm, start creating board states and player turns. each player turn will populate the board state and after it populates, 
+    //TODO * draw the image of an X or O along the cetner. with this, you can make the board state and the win condition as well 
+    //TODO * look into creating an X object with two lines, look into making the lines thicker for the circle and the X (the x could just be two)
+    vector<char> boardState {9, ' '};
 
     vector<Tile> squares = { 
         
