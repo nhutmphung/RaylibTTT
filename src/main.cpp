@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <vector>
 #include <string>
+#include <random> 
 
 #include "square.hpp"
 #include "button.hpp"
@@ -36,6 +37,10 @@ class Board {
 
 };
 
+char randomXO() {
+    return (rand() % 2 == 0) ? 'X' : 'O'; 
+}
+
 
 int main () {
 
@@ -43,6 +48,7 @@ int main () {
     //--------------------------------------------------------------------------------------
     const int screenWidth = 700;
     const int screenHeight = 600;
+
 
     SetTargetFPS(60);
 
@@ -52,11 +58,10 @@ int main () {
     Button startButton{"assets/startButton.png", {300 ,75}, .50};
     Button endButton{"assets/exitButton.png",  {300 , 300}, .65};
 
-
     //TODO * 11/18/25 9:27pm, start creating board states and player turns. each player turn will populate the board state and after it populates, 
-    //TODO * draw the image of an X or O along the cetner. with this, you can make the board state and the win condition as well 
+    //TODO * draw the image of an X or O along the center. with this, you can make the board state and the win condition as well 
     //TODO * look into creating an X object with two lines, look into making the lines thicker for the circle and the X (the x could just be two)
-    vector<char> boardState {9, ' '};
+    vector<char> boardState (9, ' ');
 
     vector<Tile> squares = { 
         
@@ -83,7 +88,8 @@ int main () {
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-
+    srand(time(NULL));
+    char currentPlayer = randomXO();
     // Main game loop
     while (!WindowShouldClose() && !exit)    // Detect window close button or ESC key
     {
@@ -91,12 +97,13 @@ int main () {
         Vector2 mousePosition = GetMousePosition(); 
         bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 
-        if(startButton.isPressed(mousePosition, mousePressed)) {
-            cout << "Start button pressed" << endl; 
-        }
-        if(endButton.isPressed(mousePosition, mousePressed)) {
-            exit = true;
-        }
+        // if(startButton.isPressed(mousePosition, mousePressed)) {
+        //     cout << "Start button pressed" << endl; 
+        // }
+        // if(endButton.isPressed(mousePosition, mousePressed)) {
+        //     exit = true;
+        // }
+
         
 
         // Draw
@@ -127,8 +134,17 @@ int main () {
 
             if(squares[i].isHovered(mousePosition) && squares[i].isClicked(mousePosition, mousePressed)){
                 cout << "Square " << (i + 1) << " clicked." << endl;
+
+                if(boardState[i] == ' ') {
+                    boardState[i] = currentPlayer; 
+                    currentPlayer =  (currentPlayer == 'O') ? 'X' : 'O'; 
+                    for(auto c: boardState) {
+                        cout << c; 
+                    }
+                }
                 DrawCircleLinesV({center.x, center.y} , 75, BLACK);
             }
+
         }
 
         board.printBoard(); 
