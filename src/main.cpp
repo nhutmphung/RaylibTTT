@@ -8,6 +8,9 @@
 
 //TODO * CRL + SHIFT + T to get file to COMPILE!!!
 
+//TODO * 11/13 10:09pm
+//TODO * FIX square.cpp for some reason, look up how to fix rdefinition and mixing declartions and function definitions!!
+
 using namespace std;
 
 class Board {
@@ -35,7 +38,6 @@ class Board {
             
 
 };
-
 
 
 int main () {
@@ -69,8 +71,6 @@ int main () {
     Tile ({440, 390}, 150 , WHITE)
 
     };
-
-
 
 
 
@@ -111,10 +111,10 @@ int main () {
 
         for(int i = 0; i < squares.size(); i++) {
 
-            // Vector2 center = {
-            //     (squares[i].bounds.x + squares[i].bounds.width) / 2,
-            //     (squares[i].bounds.y + squares[i].bounds.height) / 2
-            // };
+            Vector2 center = {
+                squares[i].bounds.x + squares[i].bounds.width / 2,
+                squares[i].bounds.y + squares[i].bounds.height / 2
+            };
 
             if(squares[i].isHovered(mousePosition)) {
                 squares[i].color = GRAY;
@@ -125,13 +125,12 @@ int main () {
 
             if(squares[i].isHovered(mousePosition) && squares[i].isClicked(mousePosition, mousePressed)){
                 cout << "Square " << (i + 1) << " clicked." << endl;
-                // DrawCircleLinesV({center.x, center.y} , 75, BLACK);
+                DrawCircleLinesV({center.x, center.y} , 75, BLACK);
             }
         }
 
         board.printBoard(); 
         //endButton.Draw();
-
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
