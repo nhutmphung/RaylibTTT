@@ -16,13 +16,13 @@ class Board {
         int row;
         int column;
         char mark;
-        vector <vector<char>> board;                            
+        vector<char> board; 
         public:
 
 
             Board() {
-                board = std::vector<std:: vector<char>> (3, std::vector<char>(3, ' '));
-            }
+                vector<char> board (9, ' ');
+                }
 
             void printBoard(void) {
 
@@ -33,7 +33,31 @@ class Board {
                 DrawRectangle(100, 380, 510, 10, BLACK);
                 
             }
-            
+
+            bool checkWin(vector<char>& board, char player) {
+
+                //** const int is used to maximized efficinecy here. a vector would work just as fine lol   */
+                //* because we know that the win condition isn't going to change, we can make it an array with const int so that it doesnt change in size 
+        
+                const int wins[8][3] = {
+                    {0,1,2}, //row 1 win con
+                    {3,4,5}, //row 2 win con
+                    {6,7,8}, //row 3 win con 
+                    {0,3,6}, //col 1 win con
+                    {1,4,7}, //col 2 win con 
+                    {2,5,8}, //col 3 win con 
+                    {0,4,8}, //diag 1 win con
+                    {2,4,6} //diag 2 win con
+                };
+
+                for(auto& w : wins)  {
+                    if ( board[w[0]] == player && board[w[1]] == player && board[w[2]] == player){
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
 
 };
 
@@ -58,9 +82,10 @@ int main () {
     Button startButton{"assets/startButton.png", {300 ,75}, .50};
     Button endButton{"assets/exitButton.png",  {300 , 300}, .65};
 
-    //TODO * 11/18/25 9:27pm, start creating board states and player turns. each player turn will populate the board state and after it populates, 
-    //TODO * draw the image of an X or O along the center. with this, you can make the board state and the win condition as well 
-    //TODO * look into creating an X object with two lines, look into making the lines thicker for the circle and the X (the x could just be two)
+    //TODO * 5:23pm 11/19/2025 created boardStates and populated boardStates as well as alternating turns 
+
+    //TODO * create it so that it makes the X and O graphic and create win condition. 
+
     vector<char> boardState (9, ' ');
 
     vector<Tile> squares = { 
